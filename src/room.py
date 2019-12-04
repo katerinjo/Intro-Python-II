@@ -14,4 +14,9 @@ class Room(Entity):
 
     def look(self):
         content_list = '\n'.join(' - ' + item.name for item in self.contents)
-        return self.description + '\n\nRoom contains:\n' + content_list
+        return '\n'.join([
+            self.name,
+            self.description,
+            '\nRoom contains:',
+            content_list
+        ])

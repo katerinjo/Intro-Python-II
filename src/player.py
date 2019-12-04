@@ -11,3 +11,9 @@ class player(Entity):
         self.hominid_arms = 2
         self.hominid_legs = 2
         self.tails = 0
+
+    def go(self, direction):
+        destination = getattr(self.location, direction)
+        self.location.remove(self)
+        self.locaton = destination
+        destination.insert(self)
