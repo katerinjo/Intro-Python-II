@@ -1,4 +1,20 @@
 from room import Room
+from textwrap import fill
+
+# Functions
+
+def color(text, color):
+    chosen = {
+        'red': '\u001b[31m',
+        'green': '\u001b[32m',
+        'blue': '\u001b[34m',
+        'yellow': '\u001b[33m'
+    }[color]
+    return chosen + text + '\u001b[0m'
+
+def log(text, color=None):
+    out_text = color(text, color) if color else text
+    print(fill(text))
 
 # Declare all the rooms
 
@@ -49,3 +65,16 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player()
+location = room['outside']
+
+while True:
+    log(location.look())
+    command = input('? ')
+    if command in ['n', 'north']:
+        player.go('n')
+    elif command in ['q', 'quit']:
+        log('Are you sure you want to quit?')
+        if input('(y/n)') in ['y', 'yes']:
+            quit()
