@@ -23,9 +23,20 @@ class Player(Entity):
             destination.insert(self)
 
     def look(self):
+        human_score = (
+            self.eyes
+            + self.hominid_arms
+            + self.hominid_legs
+            - self.tails
+            )
+        if human_score < 7:
+            human_comment = "You aren't looking very human today."
+        else:
+            human_comment = "You look so human!"
         return [
             color(self.name, 'blue'),
             f'Your gender is {self.gender}.',
             f'You have {self.eyes} eyes.',
-            f'You have {self.hominid_arms} arms and {self.hominid_legs} legs.'
+            f'You have {self.hominid_arms} arms and {self.hominid_legs} legs.',
+            human_comment
         ]
