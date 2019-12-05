@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 from textwrap import fill
 
 # Functions
@@ -66,14 +67,31 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-player = Player()
-location = room['outside']
+player = Player('Nonny', 'nice try NSA')
+player.location = room['outside']
+room['outside'].insert(player)
 
 while True:
-    log(location.look())
+    log(player.location.look())
     command = input('? ')
     if command in ['n', 'north']:
-        player.go('n')
+        player.go('n_to')
+    elif command in ['s', 'south']:
+        player.go('s_to')
+    elif command in ['e', 'east']:
+        player.go('e_to')
+    elif command in ['w', 'west']:
+        player.go('w_to')
+    elif command in ['h', 'help']:
+        print('''
+        Available commands:
+        (h)elp - list commands you can use
+        (q)uit - leave the game
+        (n)orth - go north
+        (s)outh - go south
+        (e)ast - go east
+        (w)est - go west
+        ''')
     elif command in ['q', 'quit']:
         log('Are you sure you want to quit?')
         if input('(y/n)') in ['y', 'yes']:

@@ -3,7 +3,7 @@
 
 from entity import Entity
 
-class player(Entity):
+class Player(Entity):
     def __init__(self, name, gender):
         super().__init__(name)
         self.gender = gender
@@ -14,6 +14,10 @@ class player(Entity):
 
     def go(self, direction):
         destination = getattr(self.location, direction)
+        print(destination)
         self.location.remove(self)
-        self.locaton = destination
+        self.location = destination
         destination.insert(self)
+
+    def look(self):
+        return 'You are the player.'
