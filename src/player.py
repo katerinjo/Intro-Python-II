@@ -15,9 +15,12 @@ class Player(Entity):
 
     def go(self, direction):
         destination = getattr(self.location, direction)
-        self.location.remove(self)
-        self.location = destination
-        destination.insert(self)
+        if destination is None:
+            raise RuntimeError("You can't go that way.")
+        else:
+            self.location.remove(self)
+            self.location = destination
+            destination.insert(self)
 
     def look(self):
         return [

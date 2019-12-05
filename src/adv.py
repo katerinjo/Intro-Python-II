@@ -2,6 +2,13 @@ from player import Player
 from room import Room
 from utils import log, color
 
+def blockable(fun, *args, **kwargs):
+    try:
+        fun(*args, **kwargs)
+    except RuntimeError as err:
+        print('-' * 70)
+        log(str(err), shade='red')
+
 # Declare all the rooms
 
 room = {
@@ -57,17 +64,16 @@ player.location = room['outside']
 room['outside'].insert(player)
 
 while True:
-    print()
+    print('-' * 70)
     log(*player.location.look())
     command = input('? ')
-    if command in ['n', 'north']:
-        player.go('n_to')
-    elif command in ['s', 'south']:
-        player.go('s_to')
-    elif command in ['e', 'east']:
-        player.go('e_to')
-    elif command in ['w', 'west']:
-        player.go('w_to')
+    if command in [
+            'n', 'north',
+            's', 'south',
+            'e', 'east',
+            'w', 'west'
+    ]:
+        blockable(player.go, command[0] + '_to')
     elif command in ['h', 'help']:
         print('''
         Available commands:
