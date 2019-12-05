@@ -1,21 +1,6 @@
-from room import Room
 from player import Player
-from textwrap import fill
-
-# Functions
-
-def color(text, color):
-    chosen = {
-        'red': '\u001b[31m',
-        'green': '\u001b[32m',
-        'blue': '\u001b[34m',
-        'yellow': '\u001b[33m'
-    }[color]
-    return chosen + text + '\u001b[0m'
-
-def log(text, color=None):
-    out_text = color(text, color) if color else text
-    print(fill(text))
+from room import Room
+from utils import log, color
 
 # Declare all the rooms
 
@@ -72,7 +57,8 @@ player.location = room['outside']
 room['outside'].insert(player)
 
 while True:
-    log(player.location.look())
+    print()
+    log(*player.location.look())
     command = input('? ')
     if command in ['n', 'north']:
         player.go('n_to')
@@ -93,6 +79,6 @@ while True:
         (w)est - go west
         ''')
     elif command in ['q', 'quit']:
-        log('Are you sure you want to quit?')
-        if input('(y/n)') in ['y', 'yes']:
+        log('\nAre you sure you want to quit?', shade='yellow')
+        if input('(y/n)\n') in ['y', 'yes']:
             quit()

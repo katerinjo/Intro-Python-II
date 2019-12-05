@@ -2,6 +2,7 @@
 # description attributes.
 
 from entity import Entity
+from utils import color
 
 class Room(Entity):
     def __init__(self, name, description):
@@ -17,9 +18,10 @@ class Room(Entity):
 
     def look(self):
         content_list = '\n'.join(' - ' + item.name for item in self.contents)
-        return '\n'.join([
-            self.name,
+        return [
+            color(self.name, 'blue'),
             self.description,
-            '\nRoom contains:',
+            '',
+            color('Room contains:', 'blue'),
             content_list
-        ])
+        ]

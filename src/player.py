@@ -2,6 +2,7 @@
 # currently.
 
 from entity import Entity
+from utils import color
 
 class Player(Entity):
     def __init__(self, name, gender):
@@ -14,10 +15,14 @@ class Player(Entity):
 
     def go(self, direction):
         destination = getattr(self.location, direction)
-        print(destination)
         self.location.remove(self)
         self.location = destination
         destination.insert(self)
 
     def look(self):
-        return 'You are the player.'
+        return [
+            color(self.name, 'blue'),
+            f'Your gender is {self.gender}.',
+            f'You have {self.eyes} eyes.',
+            f'You have {self.hominid_arms} arms and {self.hominid_legs} legs.'
+        ]
