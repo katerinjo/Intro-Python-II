@@ -1,4 +1,14 @@
+from item import Item
+from player import Player
 from room import Room
+from utils import log, color
+
+def blockable(fun, *args, **kwargs):
+    try:
+        fun(*args, **kwargs)
+    except RuntimeError as err:
+        print('-' * 70)
+        log(str(err), shade='red')
 
 # Declare all the rooms
 
@@ -49,3 +59,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+player = Player('Nonny', 'nice try NSA')
+player.location = room['outside']
+room['outside'].insert(player)
+
+while True:
+    print('-' * 70)
+    log(*player.location.look())
+    command = input('? ')
+    if command in [
+            'n', 'north',
+            's', 'south',
+            'e', 'east',
+            'w', 'west'
+    ]:
+        blockable(player.go, command[0] + '_to')
+    elif command in ['h', 'help']:
+        print('''
+        Available commands:
+        (h)elp - list commands you can use
+        (q)uit - leave the game
+        (n)orth - go north
+        (s)outh - go south
+        (e)ast - go east
+        (w)est - go west
+        ''')
+    elif command in ['q', 'quit']:
+        log('\nAre you sure you want to quit?', shade='yellow')
+        if input('(y/n)\n') in ['y', 'yes']:
+            quit()
